@@ -1,0 +1,18 @@
+{
+  "name": "tages_task",
+  "version": "1.0.0",
+  "description": "",
+  "main": "big_sort.js",
+  "scripts": {
+    "sort": "node big_sort.js input.txt output.txt",
+    "test": "echo \"Error: no test specified\" && exit 1"
+
+  },
+  "type": "module",
+
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+  }
+}
