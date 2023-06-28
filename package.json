@@ -5,6 +5,7 @@
   "main": "big_sort.js",
   "scripts": {
     "sort": "node big_sort.js input.txt output.txt",
+    "check": "node check.js output.txt",
     "test": "echo \"Error: no test specified\" && exit 1"
 
   },

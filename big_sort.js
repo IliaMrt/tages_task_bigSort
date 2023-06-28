@@ -10,7 +10,7 @@ async function readArrFromFile(fileName) {
     let prevSymbolIsNewStr = 0
     let currentPosition = 0
     for (let i = 0; i < fileSize; i += maxMemUsage) {
-        const end = i + maxMemUsage < fileSize ? i + maxMemUsage : fileSize
+        const end = i + maxMemUsage < fileSize ? i + maxMemUsage - 1 : fileSize
         const currentChunk = await read(fileName, i, end);
         for (let j = 0; j <= currentChunk.length - 1; j++) {
             if (currentChunk.charCodeAt(j) == '10') {
@@ -79,19 +79,23 @@ async function writeArrToFile(inputFile, outputFile, arr) {
 async function bigSort(inputFile, outputFile) {
     let arr = await readArrFromFile(inputFile)
     arr.forEach((v, i) => arr[i] = [v])
-    while (arr.length > 1) {
-        const tempArr = []
-        for (let i = 0; i < arr.length; i += 2) {
-            if (i + 1 < arr.length) {
-                let temp = await merge(arr[i], arr[i + 1], inputFile)
-                tempArr.push(temp)
-            } else tempArr.push(arr[i])
-        }
-        arr = tempArr
-    }
+    arr = await sortArr(arr, inputFile)
     await writeArrToFile(inputFile, outputFile, arr[0])
     console.log(`stop: ${new Date()}`)
 
+}
+
+async function sortArr(arr, inputFile) {
+    while (arr.length > 1) {
+        let tempArr = []
+        for (let i = 0; i < arr.length; i += 2) {
+            if (i + 1 < arr.length)
+                tempArr.push(await merge(arr[i], arr[i + 1], inputFile))
+            else tempArr.push(arr[i])
+        }
+        arr = tempArr
+    }
+    return arr;
 }
 
 async function merge(left, right, fileName) {
@@ -125,7 +129,7 @@ async function stringsCompare(left, right, file) {
         const leftSymbol = await read(file, left.start + i, left.start + i);
         const rightSymbol = await read(file, right.start + i, right.start + i);
         if (leftSymbol != rightSymbol)
-            return leftSymbol < rightSymbol
+            return leftSymbol.charCodeAt(0) < rightSymbol.charCodeAt(0)
     }
 
     return res
