@@ -7,13 +7,16 @@
     "sort": "node big_sort.js input.txt output.txt",
     "check": "node check.js output.txt",
     "test": "echo \"Error: no test specified\" && exit 1"
-
   },
   "type": "module",
-
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
+  "devDependencies": {
+    "eslint": "^8.44.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^16.0.1",
+    "eslint-plugin-promise": "^6.1.1"
   }
 }
